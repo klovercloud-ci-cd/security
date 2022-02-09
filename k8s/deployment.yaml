@@ -8,12 +8,6 @@ spec:
   selector:
     matchLabels:
       app: klovercloud-security
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 2
-      maxUnavailable: 0
-  minReadySeconds: 25
   template:
     metadata:
       labels:

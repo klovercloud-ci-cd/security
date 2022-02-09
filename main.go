@@ -7,12 +7,18 @@ import (
 	"github.com/klovercloud-ci-cd/security/dependency"
 	_ "github.com/klovercloud-ci-cd/security/docs"
 	"github.com/klovercloud-ci-cd/security/enums"
+	"github.com/labstack/echo/v4/middleware"
+	"net/http"
 )
 
 // @title Klovercloud-ci-security API
 // @description Klovercloud-security API
 func main() {
 	e := config.New()
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"*"},
+		AllowMethods: []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete},
+	}))
 	go initResources()
 	initPermissions()
 	initRoles()
