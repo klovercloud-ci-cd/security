@@ -8,6 +8,27 @@ import (
 	"strings"
 )
 
+//admin first name.
+var FirstName string
+
+//admin last name.
+var LastName string
+
+//admin email.
+var Email string
+
+//admin password.
+var Password string
+
+//admin phone number.
+var PhoneNumber string
+
+//auth type.
+var AuthType string
+
+//attached company id.
+var CompanyId string
+
 // ServerPort refers to server port.
 var ServerPort string
 
@@ -102,6 +123,14 @@ func InitEnvironmentVariables() {
 	Publickey = os.Getenv("PUBLIC_KEY")
 	RegularTokenLifetime = os.Getenv("REGULAR_TOKEN_LIFETIME")
 	CTLTokenLifetime = os.Getenv("CTL_TOKEN_LIFETIME")
+
+	FirstName = os.Getenv("USER_FIRST_NAME")
+	LastName = os.Getenv("USER_LAST_NAME")
+	Email = os.Getenv("USER_EMAIL")
+	Password = os.Getenv("USER_PASSWORD")
+	PhoneNumber = os.Getenv("USER_PHONE")
+	AuthType = os.Getenv("USER_AUTH_TYPE")
+	CompanyId = os.Getenv("USER_ATTACH_COMPANY_ID")
 
 	MailServerHostEmail = os.Getenv("MAIL_SERVER_HOST_EMAIL")
 	MailServerHostEmailSecret = os.Getenv("MAIL_SERVER_HOST_EMAIL_SECRET")
