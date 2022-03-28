@@ -19,7 +19,7 @@ func Routes(e *echo.Echo) {
 }
 
 func index(c echo.Context) error {
-	return c.String(http.StatusOK, "This is KloverCloud CI Event Store Service")
+	return c.String(http.StatusOK, "This is KloverCloud CI Security Service")
 }
 
 func health(c echo.Context) error {
