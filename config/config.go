@@ -8,6 +8,12 @@ import (
 	"strings"
 )
 
+//Company name
+var CompanyName string
+
+// integration manager url
+var IntegrationManagerUrl string
+
 //admin first name.
 var FirstName string
 
@@ -139,6 +145,9 @@ func InitEnvironmentVariables() {
 	Resources = strings.Split(os.Getenv("RESOURCES"), ",")
 	Permissions = strings.Split(os.Getenv("PERMISSIONS"), ",")
 	ApiServerUrl = os.Getenv("API_SERVER_URL")
+	IntegrationManagerUrl = os.Getenv("INTEGRATION_MANAGER_URL")
+	CompanyName = os.Getenv("COMPANY_NAME")
+
 	if os.Getenv("APPLICATION_CREATION_ENABLED") == "true" {
 		ApplicationCreationEnabled = true
 	} else {

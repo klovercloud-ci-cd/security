@@ -22,6 +22,20 @@ type userService struct {
 	httpClientService service.HttpClient
 }
 
+func (u userService) InitCompany(company v1.Company) error {
+	marshal, marshalErr := json.Marshal(company)
+	if marshalErr != nil {
+		return marshalErr
+	}
+	header := make(map[string]string)
+	header["Content-Type"] = "application/json"
+	_, err := u.httpClientService.Post(config.IntegrationManagerUrl+"/companies", header, marshal)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func (u userService) GetUsersByCompanyId(companyId string, status enums.STATUS) []v1.User {
 	return u.userRepo.GetUsersByCompanyId(companyId, status)
 }

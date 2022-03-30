@@ -19,6 +19,7 @@ type User interface {
 	UpdateUserResourcePermissionDto(id string, userResourcePermissionDto v1.UserResourcePermission) error
 	SendOtp(email, phone string) error
 	AttachCompany(company v1.Company, companyId, token string) error
+	InitCompany(company v1.Company) error
 	UpdateStatus(id string, status enums.STATUS) error
 	GetUsersByCompanyId(companyId string, status enums.STATUS) []v1.User
 }

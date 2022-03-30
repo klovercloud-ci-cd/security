@@ -65,19 +65,26 @@ func initUserResourcePermission() v1.UserResourcePermission {
 func initAdmin() {
 	userService := dependency.GetV1UserService()
 	userResourcePermissionDto := initUserResourcePermission()
-	userService.Store(v1.UserRegistrationDto{
-		Metadata:           v1.UserMetadata(struct{ CompanyId string }{CompanyId: config.CompanyId}),
-		FirstName:          config.FirstName,
-		LastName:           config.LastName,
-		Email:              config.Email,
-		Phone:              config.PhoneNumber,
-		Password:           config.Password,
-		AuthType:           enums.AUTH_TYPE(config.AuthType),
-		CreatedDate:        time.Now().UTC(),
-		UpdatedDate:        time.Now().UTC(),
-		Status:             enums.ACTIVE,
-		ID:                 uuid.New().String(),
-		ResourcePermission: userResourcePermissionDto,
+	companyId := uuid.New().String()
+	if config.Email != "" {
+		userService.Store(v1.UserRegistrationDto{
+			Metadata:           v1.UserMetadata(struct{ CompanyId string }{CompanyId: companyId}),
+			FirstName:          config.FirstName,
+			LastName:           config.LastName,
+			Email:              config.Email,
+			Phone:              config.PhoneNumber,
+			Password:           config.Password,
+			AuthType:           enums.AUTH_TYPE(config.AuthType),
+			CreatedDate:        time.Now().UTC(),
+			UpdatedDate:        time.Now().UTC(),
+			Status:             enums.ACTIVE,
+			ID:                 uuid.New().String(),
+			ResourcePermission: userResourcePermissionDto,
+		})
+	}
+	userService.InitCompany(v1.Company{
+		Id:   companyId,
+		Name: config.CompanyName,
 	})
 }
 
