@@ -81,11 +81,12 @@ func initAdmin() {
 			ID:                 uuid.New().String(),
 			ResourcePermission: userResourcePermissionDto,
 		})
+		userService.InitCompany(v1.Company{
+			Id:   companyId,
+			Name: config.CompanyName,
+		})
 	}
-	userService.InitCompany(v1.Company{
-		Id:   companyId,
-		Name: config.CompanyName,
-	})
+
 }
 
 func initRoles() {
