@@ -267,7 +267,6 @@ func (u userApi) registerUser(context echo.Context) error {
 		formData.Password = ""
 	}
 	formData.ID = uuid.New().String()
-	formData.Metadata.CompanyId = userResourcePermission.Metadata.CompanyId
 	formData.CreatedDate = time.Now().UTC()
 	formData.UpdatedDate = time.Now().UTC()
 	formData.Status = enums.ACTIVE

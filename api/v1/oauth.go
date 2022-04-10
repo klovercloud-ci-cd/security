@@ -111,6 +111,8 @@ func (o oauthApi) handlePasswordGrant(context echo.Context) error {
 	}
 	userResourcePermission := o.userResourcePermissionService.GetByUserID(existingUser.ID)
 	userResourcePermission.Metadata.CompanyId = existingUser.Metadata.CompanyId
+	userResourcePermission.Metadata.FirstName = existingUser.Metadata.FirstName
+	userResourcePermission.Metadata.LastName = existingUser.Metadata.LastName
 	var tokenLifeTime int64
 	if tokenType == string(enums.REGULAR_TOKEN) {
 		i, err := strconv.ParseInt(config.RegularTokenLifetime, 10, 64)

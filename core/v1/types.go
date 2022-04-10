@@ -72,6 +72,8 @@ type User struct {
 // UserMetadata holds users metadata.
 type UserMetadata struct {
 	CompanyId string `json:"company_id" bson:"company_id"`
+	FirstName string `json:"first_name" bson:"-"`
+	LastName  string `json:"last_name" bson:"-"`
 }
 
 // UserRegistrationDto dto that holds user registration info.

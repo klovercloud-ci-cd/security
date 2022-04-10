@@ -68,7 +68,7 @@ func initAdmin() {
 	companyId := uuid.New().String()
 	if config.Email != "" {
 		userService.Store(v1.UserRegistrationDto{
-			Metadata:           v1.UserMetadata(struct{ CompanyId string }{CompanyId: companyId}),
+			Metadata:           v1.UserMetadata{ CompanyId: companyId },
 			FirstName:          config.FirstName,
 			LastName:           config.LastName,
 			Email:              config.Email,
