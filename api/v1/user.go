@@ -163,22 +163,27 @@ func (u userApi) ResetPassword(context echo.Context) error {
 		log.Println("Input Error:", err.Error())
 		return common.GenerateErrorResponse(context, nil, "Failed to Bind Input!")
 	}
-	if !u.otpService.IsValid(formData.Otp) {
-		return common.GenerateErrorResponse(context, "[ERROR]: Invalid Otp", "Please provide a valid otp!")
+	if formData.CurrentPassword == "" && formData.Otp == "" {
+		return common.GenerateForbiddenResponse(context, "[ERROR]: Failed to reset password!", "Please provide required data!")
+	}
+	if formData.Otp != "" {
+		if !u.otpService.IsValid(formData.Otp) {
+			return common.GenerateErrorResponse(context, "[ERROR]: Invalid Otp", "Please provide a valid otp!")
+		}
 	}
 	var user v1.User
-
 	user = u.userService.GetByEmail(formData.Email)
 	if user.ID == "" {
 		return common.GenerateForbiddenResponse(context, "[ERROR]: No User found!", "Please login with actual user email!")
 	}
-	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(formData.CurrentPassword))
-	if err != nil {
-		return common.GenerateForbiddenResponse(context, "[ERROR]: Password not matched!", "Please provide due credential!"+err.Error())
+	if formData.CurrentPassword != "" {
+		err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(formData.CurrentPassword))
+		if err != nil {
+			return common.GenerateForbiddenResponse(context, "[ERROR]: Password not matched!", "Please provide due credential!"+err.Error())
+		}
 	}
-
 	user.Password = formData.NewPassword
-	err = u.userService.UpdatePassword(user)
+	err := u.userService.UpdatePassword(user)
 	if err != nil {
 		return common.GenerateForbiddenResponse(context, "[ERROR]: Failed to reset password!", err.Error())
 	}
