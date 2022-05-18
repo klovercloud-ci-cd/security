@@ -18,7 +18,7 @@ func (e emailService) Listen(otp v1.Otp) {
 		  Please find your OTP attached below. It will be expired within 5 minutes.
 		  OTP:` + otp.Otp
 	} else {
-		message = `click on the following link to reset your password:\n` +
+		message = `Click on the following link to reset your password:\n` +
 			otp.BaseUrl + "?email=" + otp.Email + "&otp=" + otp.Otp
 	}
 	// Create authentication
