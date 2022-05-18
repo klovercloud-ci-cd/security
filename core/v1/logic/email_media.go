@@ -12,9 +12,15 @@ type emailService struct {
 }
 
 func (e emailService) Listen(otp v1.Otp) {
-	message := `Hi ` + otp.Email + `,` + `
+	var message string
+	if otp.BaseUrl == "" {
+		message = `Hi ` + otp.Email + `,` + `
 		  Please find your OTP attached below. It will be expired within 5 minutes.
 		  OTP:` + otp.Otp
+	} else {
+		message = `click on the following link to reset your password:\n` +
+			otp.BaseUrl + "?email=" + otp.Email + "&otp=" + otp.Otp
+	}
 	// Create authentication
 	auth := smtp.PlainAuth("", config.MailServerHostEmail, config.MailServerHostEmailSecret, config.SmtpHost)
 	// Send actual message

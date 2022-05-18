@@ -79,7 +79,7 @@ func (u userService) GetByPhone(phone string) v1.User {
 	return u.userRepo.GetByPhone(phone)
 }
 
-func (u userService) SendOtp(email, phone string) error {
+func (u userService) SendOtp(email, phone, baseUrl string) error {
 	var user v1.User
 	if email != "" {
 		user = u.GetByEmail(email)
@@ -91,6 +91,9 @@ func (u userService) SendOtp(email, phone string) error {
 		Email: user.Email,
 		Phone: user.Phone,
 		Otp:   u.generateOtp(6),
+	}
+	if baseUrl != "" {
+		otp.BaseUrl = baseUrl
 	}
 	if email != "" {
 		u.emailMediaService.Listen(otp)

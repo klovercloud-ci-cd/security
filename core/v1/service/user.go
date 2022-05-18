@@ -17,7 +17,7 @@ type User interface {
 	UpdateToken(token, refreshToken, existingToken string) error
 	UpdatePassword(user v1.User) error
 	UpdateUserResourcePermissionDto(id string, userResourcePermissionDto v1.UserResourcePermission) error
-	SendOtp(email, phone string) error
+	SendOtp(email, phone, baseUrl string) error
 	AttachCompany(company v1.Company, companyId, token string) error
 	InitCompany(company v1.Company) error
 	UpdateStatus(id string, status enums.STATUS) error

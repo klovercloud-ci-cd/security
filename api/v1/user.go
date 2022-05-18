@@ -147,9 +147,9 @@ func (u userApi) ForgotPassword(context echo.Context) error {
 	media := context.QueryParam("media")
 	var err error
 	if strings.Contains(media, "@") {
-		err = u.userService.SendOtp(media, "")
+		err = u.userService.SendOtp(media, "", "")
 	} else {
-		err = u.userService.SendOtp("", media)
+		err = u.userService.SendOtp("", media, "")
 	}
 	if err != nil {
 		return common.GenerateErrorResponse(context, "[ERROR]: Failed to generate OTP", err.Error())
@@ -288,7 +288,7 @@ func (u userApi) registerUser(context echo.Context) error {
 	if err != nil {
 		return common.GenerateErrorResponse(context, nil, err.Error())
 	}
-	err = u.userService.SendOtp(formData.Email, "")
+	err = u.userService.SendOtp(formData.Email, "", formData.BaseUrl)
 	if err != nil {
 		return common.GenerateErrorResponse(context, "[ERROR]: Failed to send otp!", "User has been created but failed to send otp!")
 	}

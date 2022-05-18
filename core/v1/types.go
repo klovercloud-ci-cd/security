@@ -90,6 +90,7 @@ type UserRegistrationDto struct {
 	UpdatedDate        time.Time              `json:"updated_date" bson:"updated_date"`
 	AuthType           enums.AUTH_TYPE        `json:"auth_type" bson:"auth_type"`
 	ResourcePermission UserResourcePermission `json:"resource_permission" bson:"resource_permission"`
+	BaseUrl            string                 `json:"base_url" bson:"base_url"`
 }
 
 // RoleUpdateOption contains options for role update.
@@ -215,11 +216,12 @@ func (p Permission) Validate() error {
 
 // Otp contains otp data
 type Otp struct {
-	ID    string    `json:"id" bson:"id"`
-	Email string    `json:"email" bson:"email"`
-	Phone string    `json:"phone" bson:"phone"`
-	Otp   string    `json:"otp" bson:"otp"`
-	Exp   time.Time `json:"exp" bson:"exp"`
+	ID      string    `json:"id" bson:"id"`
+	Email   string    `json:"email" bson:"email"`
+	Phone   string    `json:"phone" bson:"phone"`
+	Otp     string    `json:"otp" bson:"otp"`
+	Exp     time.Time `json:"exp" bson:"exp"`
+	BaseUrl string    `json:"baseUrl" bson:"baseUrl"`
 }
 
 // Company contains company data
