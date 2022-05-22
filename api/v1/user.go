@@ -172,7 +172,15 @@ func (u userApi) ResetPassword(context echo.Context) error {
 		}
 	}
 	var user v1.User
-	user = u.userService.GetByEmail(formData.Email)
+	if formData.Email == "" {
+		userResourcePermission, err := GetUserResourcePermissionFromBearerToken(context, u.jwtService)
+		if err != nil {
+			return common.GenerateErrorResponse(context, err.Error(), "Operation Failed!")
+		}
+		user = u.userService.GetByID(userResourcePermission.UserId)
+	} else {
+		user = u.userService.GetByEmail(formData.Email)
+	}
 	if user.ID == "" {
 		return common.GenerateForbiddenResponse(context, "[ERROR]: No User found!", "Please login with actual user email!")
 	}

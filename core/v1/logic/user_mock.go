@@ -83,7 +83,7 @@ func (u userMock) GetByPhone(phone string) v1.User {
 	panic("implement me")
 }
 
-func (u userMock) SendOtp(email, phone string) error {
+func (u userMock) SendOtp(email, phone, baseUrl string) error {
 	var user v1.User
 	if email != "" {
 		user = u.GetByEmail(email)
