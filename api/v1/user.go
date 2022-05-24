@@ -235,11 +235,20 @@ func (u userApi) registerAdmin(context echo.Context) error {
 	userResourcePermissionDto := v1.UserResourcePermission{}
 	var resourceWiseRoles []v1.ResourceWiseRoles
 	existingResources := u.resourceService.Get()
-	adminRole := u.roleService.GetByName(string(enums.ADMIN))
+	adminRole := u.roleService.GetByName(string(enums.ADMIN_ROLE))
+	userRole := u.roleService.GetByName(string(enums.USER_ROLE))
 	for _, each := range existingResources {
-		resourceWiseRole := v1.ResourceWiseRoles{
-			Name:  each.Name,
-			Roles: []v1.Role{{Name: adminRole.Name}},
+		var resourceWiseRole v1.ResourceWiseRoles
+		if each.Name == string(enums.ROLE_RESOURCE) || each.Name == string(enums.PERMISSION_RESOURCE) {
+			resourceWiseRole = v1.ResourceWiseRoles{
+				Name:  each.Name,
+				Roles: []v1.Role{{Name: userRole.Name}},
+			}
+		} else {
+			resourceWiseRole = v1.ResourceWiseRoles{
+				Name:  each.Name,
+				Roles: []v1.Role{{Name: adminRole.Name}},
+			}
 		}
 		resourceWiseRoles = append(resourceWiseRoles, resourceWiseRole)
 	}
@@ -265,7 +274,7 @@ func (u userApi) registerUser(context echo.Context) error {
 	if err != nil {
 		return common.GenerateErrorResponse(context, err.Error(), "Operation Failed!")
 	}
-	if err := checkAuthority(userResourcePermission, string(enums.USER), string(enums.ADMIN), ""); err != nil {
+	if err := checkAuthority(userResourcePermission, string(enums.USER), string(enums.ADMIN_ROLE), ""); err != nil {
 		return common.GenerateForbiddenResponse(context, err.Error(), "Operation Failed!")
 	}
 	if userResourcePermission.Metadata.CompanyId == "" {

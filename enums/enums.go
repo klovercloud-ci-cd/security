@@ -95,8 +95,10 @@ const (
 type ROLE string
 
 const (
-	// ADMIN refers to admin role
-	ADMIN = ROLE("ADMIN")
+	// ADMIN_ROLE refers to admin role
+	ADMIN_ROLE = ROLE("ADMIN")
+	// USER_ROLE refers to user role
+	USER_ROLE = ROLE("USER")
 )
 
 // RESOURCE resource string
@@ -115,6 +117,10 @@ const (
 	REPOSITORY = RESOURCE("repository")
 	// APPLICATION refers to application resource
 	APPLICATION = RESOURCE("application")
+	// ROLE_RESOURCE refers to role resource
+	ROLE_RESOURCE = RESOURCE("role")
+	// PERMISSION_RESOURCE refers to permission resource
+	PERMISSION_RESOURCE = RESOURCE("permission")
 )
 
 // PERMISSION permission string

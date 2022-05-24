@@ -16,12 +16,19 @@ type permissionApi struct {
 }
 
 func (p permissionApi) Store(context echo.Context) error {
+	userResourcePermission, err := GetUserResourcePermissionFromBearerToken(context, p.jwtService)
+	if err != nil {
+		return common.GenerateErrorResponse(context, err.Error(), "Operation Failed!")
+	}
+	if err := checkAuthority(userResourcePermission, string(enums.PERMISSION_RESOURCE), "", string(enums.CREATE)); err != nil {
+		return common.GenerateForbiddenResponse(context, err.Error(), "Operation Failed!")
+	}
 	formData := v1.Permission{}
 	if err := context.Bind(&formData); err != nil {
 		log.Println("Input Error:", err.Error())
 		return common.GenerateErrorResponse(context, nil, err.Error())
 	}
-	err := p.service.Store(formData)
+	err = p.service.Store(formData)
 	if err != nil {
 		log.Println("[Error]:", err.Error())
 		return common.GenerateErrorResponse(context, nil, "Operation Failed!")
@@ -45,7 +52,7 @@ func (p permissionApi) Get(context echo.Context) error {
 	if err != nil {
 		return common.GenerateErrorResponse(context, err.Error(), "Operation Failed!")
 	}
-	if err := checkAuthority(userResourcePermission, string(enums.USER), "", string(enums.READ)); err != nil {
+	if err := checkAuthority(userResourcePermission, string(enums.PERMISSION_RESOURCE), "", string(enums.READ)); err != nil {
 		return common.GenerateForbiddenResponse(context, err.Error(), "Operation Failed!")
 	}
 	data := p.service.Get()
@@ -53,8 +60,15 @@ func (p permissionApi) Get(context echo.Context) error {
 }
 
 func (p permissionApi) Delete(context echo.Context) error {
+	userResourcePermission, err := GetUserResourcePermissionFromBearerToken(context, p.jwtService)
+	if err != nil {
+		return common.GenerateErrorResponse(context, err.Error(), "Operation Failed!")
+	}
+	if err := checkAuthority(userResourcePermission, string(enums.PERMISSION_RESOURCE), "", string(enums.DELETE)); err != nil {
+		return common.GenerateForbiddenResponse(context, err.Error(), "Operation Failed!")
+	}
 	name := context.QueryParam("permissionName")
-	err := p.service.Delete(name)
+	err = p.service.Delete(name)
 	if err != nil {
 		log.Println("[Error]:", err.Error())
 		return common.GenerateErrorResponse(context, nil, "Operation Failed!")

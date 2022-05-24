@@ -33,7 +33,7 @@ func (r roleApi) Store(context echo.Context) error {
 	if err != nil {
 		return common.GenerateErrorResponse(context, err.Error(), "Operation Failed!")
 	}
-	if err := checkAuthority(userResourcePermission, string(enums.USER), "", string(enums.CREATE)); err != nil {
+	if err := checkAuthority(userResourcePermission, string(enums.ROLE_RESOURCE), "", string(enums.CREATE)); err != nil {
 		return common.GenerateForbiddenResponse(context, err.Error(), "Operation Failed!")
 	}
 	formData := v1.RoleDto{}
@@ -65,7 +65,7 @@ func (r roleApi) Get(context echo.Context) error {
 	if err != nil {
 		return common.GenerateErrorResponse(context, err.Error(), "Operation Failed!")
 	}
-	if err := checkAuthority(userResourcePermission, string(enums.USER), "", string(enums.READ)); err != nil {
+	if err := checkAuthority(userResourcePermission, string(enums.ROLE_RESOURCE), "", string(enums.READ)); err != nil {
 		return common.GenerateForbiddenResponse(context, err.Error(), "Operation Failed!")
 	}
 	data := r.service.Get()
@@ -91,7 +91,7 @@ func (r roleApi) GetByName(context echo.Context) error {
 	if err != nil {
 		return common.GenerateErrorResponse(context, err.Error(), "Operation Failed!")
 	}
-	if err := checkAuthority(userResourcePermission, string(enums.USER), "", string(enums.READ)); err != nil {
+	if err := checkAuthority(userResourcePermission, string(enums.ROLE_RESOURCE), "", string(enums.READ)); err != nil {
 		return common.GenerateForbiddenResponse(context, err.Error(), "Operation Failed!")
 	}
 	name := context.Param("name")
@@ -118,7 +118,7 @@ func (r roleApi) Delete(context echo.Context) error {
 	if err != nil {
 		return common.GenerateErrorResponse(context, err.Error(), "Operation Failed!")
 	}
-	if err := checkAuthority(userResourcePermission, string(enums.USER), "", string(enums.DELETE)); err != nil {
+	if err := checkAuthority(userResourcePermission, string(enums.ROLE_RESOURCE), "", string(enums.DELETE)); err != nil {
 		return common.GenerateForbiddenResponse(context, err.Error(), "Operation Failed!")
 	}
 	name := context.Param("name")
@@ -146,7 +146,7 @@ func (r roleApi) Update(context echo.Context) error {
 	if err != nil {
 		return common.GenerateErrorResponse(context, err.Error(), "Operation Failed!")
 	}
-	if err := checkAuthority(userResourcePermission, string(enums.USER), "", string(enums.UPDATE)); err != nil {
+	if err := checkAuthority(userResourcePermission, string(enums.ROLE_RESOURCE), "", string(enums.UPDATE)); err != nil {
 		return common.GenerateForbiddenResponse(context, err.Error(), "Operation Failed!")
 	}
 	var formData []v1.Permission
