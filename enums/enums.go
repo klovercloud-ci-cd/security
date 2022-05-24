@@ -95,10 +95,10 @@ const (
 type ROLE string
 
 const (
-	// ADMIN_ROLE refers to admin role
-	ADMIN_ROLE = ROLE("ADMIN")
-	// USER_ROLE refers to user role
-	USER_ROLE = ROLE("USER")
+	// ADMIN refers to admin role
+	ADMIN = ROLE("ADMIN")
+	// VIEWER refers to user role
+	VIEWER = ROLE("VIEWER")
 )
 
 // RESOURCE resource string

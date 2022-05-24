@@ -49,7 +49,7 @@ func initUserResourcePermission() v1.UserResourcePermission {
 	userResourcePermissionDto := v1.UserResourcePermission{}
 	var resourceWiseRoles []v1.ResourceWiseRoles
 	existingResources := resourceService.Get()
-	adminRole := roleService.GetByName(string(enums.ADMIN_ROLE))
+	adminRole := roleService.GetByName(string(enums.ADMIN))
 	for _, each := range existingResources {
 		resourceWiseRole := v1.ResourceWiseRoles{
 			Name:  each.Name,
@@ -94,12 +94,12 @@ func initSuperAdmin() {
 func initRoles() {
 	permissions := dependency.GetV1PermissionService().Get()
 	role := v1.RoleDto{
-		Name:        string(enums.ADMIN_ROLE),
+		Name:        string(enums.ADMIN),
 		Permissions: permissions,
 	}
 	dependency.GetV1RoleService().Store(role)
 	role = v1.RoleDto{
-		Name: string(enums.USER_ROLE),
+		Name: string(enums.VIEWER),
 		Permissions: []v1.Permission{
 			{
 				Name: "READ",

@@ -7,6 +7,7 @@ import (
 	"github.com/klovercloud-ci-cd/security/config"
 	v1 "github.com/klovercloud-ci-cd/security/core/v1"
 	"github.com/klovercloud-ci-cd/security/core/v1/service"
+	"github.com/klovercloud-ci-cd/security/enums"
 	"github.com/labstack/echo/v4"
 	"log"
 	"strings"
@@ -101,6 +102,15 @@ func filterOutNonExistingRolesAndResources(roleMap map[string]v1.Role, resourceM
 					Roles: addedRoles,
 				}
 				newResourceWiseRoles = append(newResourceWiseRoles, resourceWiseRole)
+			}
+		}
+	}
+	for idx, eachResource := range newResourceWiseRoles {
+		if eachResource.Name == string(enums.ROLE_RESOURCE) || eachResource.Name == string(enums.PERMISSION_RESOURCE) {
+			newResourceWiseRoles[idx].Roles = []v1.Role{
+				{
+					Name: string(enums.VIEWER),
+				},
 			}
 		}
 	}
