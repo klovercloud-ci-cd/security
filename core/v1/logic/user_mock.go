@@ -14,6 +14,11 @@ type userMock struct {
 	phoneMediaService service.Media
 }
 
+func (u userMock) GetUsersCountByCompanyId(companyId string) v1.UsersCount {
+	//TODO implement me
+	panic("implement me")
+}
+
 func (u userMock) InitCompany(company v1.Company) error {
 	//TODO implement me
 	panic("implement me")

@@ -181,7 +181,7 @@ func (u userApi) ResetPassword(context echo.Context) error {
 	} else {
 		user = u.userService.GetByEmail(formData.Email)
 	}
-	if user.ID == "" {
+	if user.ID == "" || user.Status == enums.DELETED || user.Status == enums.INACTIVE {
 		return common.GenerateForbiddenResponse(context, "[ERROR]: No User found!", "Please login with actual user email!")
 	}
 	if formData.CurrentPassword != "" {
@@ -205,7 +205,7 @@ func (u userApi) ResetPassword(context echo.Context) error {
 // @Produce json
 // @Param Authorization header string true "Insert your access token while adding new user for your company" default(Bearer <Add access token here>)
 // @Param data body v1.UserRegistrationDto true "dto for creating user"
-// @Param action path string true "action [create_user] if admin wants to create new user"
+// @Param action query string true "action [create_user] if admin wants to create new user"
 // @Success 200 {object} common.ResponseDTO
 // @Failure 400 {object} common.ResponseDTO
 // @Forbidden 403 {object} common.ResponseDTO
@@ -319,6 +319,7 @@ func (u userApi) registerUser(context echo.Context) error {
 // @Produce json
 // @Param Authorization header string true "Insert your access token" default(Bearer <Add access token here>)
 // @Param status path string true "status type [active/inactive]"
+// @Param action query string false "action [users_count]"
 // @Success 200 {object} common.ResponseDTO{data=[]v1.User{}}
 // @Forbidden 403 {object} common.ResponseDTO
 // @Failure 400 {object} common.ResponseDTO
@@ -334,6 +335,10 @@ func (u userApi) Get(context echo.Context) error {
 	companyId := userResourcePermission.Metadata.CompanyId
 	if companyId == "" {
 		return common.GenerateErrorResponse(context, "[ERROR]: User got no company!", "Please attach a company first!")
+	}
+	action := context.QueryParam("action")
+	if action == "users_count" {
+		return common.GenerateSuccessResponse(context, u.userService.GetUsersCountByCompanyId(companyId), nil, "Operation Successful")
 	}
 	status := context.QueryParam("status")
 	if status == string(enums.ACTIVE) {

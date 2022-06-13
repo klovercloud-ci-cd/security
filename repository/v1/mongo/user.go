@@ -22,6 +22,50 @@ type userRepository struct {
 	timeout time.Duration
 }
 
+func (u userRepository) GetUsersCountByCompanyId(companyId string) v1.UsersCount {
+	var active int64
+	var inactive int64
+	query := bson.M{
+		"$and": []bson.M{
+			{"metadata.company_id": companyId},
+			{"status": enums.ACTIVE},
+		},
+	}
+	count, err := u.manager.Db.Collection(UserCollection).CountDocuments(u.manager.Ctx, query)
+	if err != nil {
+		log.Println(err.Error())
+	}
+	active = count
+	query = bson.M{
+		"$and": []bson.M{
+			{"metadata.company_id": companyId},
+			{"status": enums.INACTIVE},
+		},
+	}
+	count, err = u.manager.Db.Collection(UserCollection).CountDocuments(u.manager.Ctx, query)
+	if err != nil {
+		log.Println(err.Error())
+	}
+	inactive = count
+	return v1.UsersCount{Data: struct {
+		Users struct {
+			Active   int64 `json:"active"`
+			Inactive int64 `json:"inactive"`
+		} `json:"users"`
+	}(struct {
+		Users struct {
+			Active   int64 `json:"active"`
+			Inactive int64 `json:"inactive"`
+		}
+	}{Users: struct {
+		Active   int64 `json:"active"`
+		Inactive int64 `json:"inactive"`
+	}(struct {
+		Active   int64
+		Inactive int64
+	}{Active: active, Inactive: inactive})})}
+}
+
 func (u userRepository) GetUsersByCompanyId(companyId string, status enums.STATUS) []v1.User {
 	var results []v1.User
 	metadata := v1.UserMetadata{CompanyId: companyId}

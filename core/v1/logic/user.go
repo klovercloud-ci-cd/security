@@ -22,6 +22,10 @@ type userService struct {
 	httpClientService service.HttpClient
 }
 
+func (u userService) GetUsersCountByCompanyId(companyId string) v1.UsersCount {
+	return u.userRepo.GetUsersCountByCompanyId(companyId)
+}
+
 func (u userService) InitCompany(company v1.Company) error {
 	marshal, marshalErr := json.Marshal(company)
 	if marshalErr != nil {

@@ -22,4 +22,5 @@ type User interface {
 	InitCompany(company v1.Company) error
 	UpdateStatus(id string, status enums.STATUS) error
 	GetUsersByCompanyId(companyId string, status enums.STATUS) []v1.User
+	GetUsersCountByCompanyId(companyId string) v1.UsersCount
 }
