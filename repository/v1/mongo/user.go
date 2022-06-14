@@ -47,23 +47,14 @@ func (u userRepository) GetUsersCountByCompanyId(companyId string) v1.UsersCount
 		log.Println(err.Error())
 	}
 	inactive = count
-	return v1.UsersCount{Data: struct {
-		Users struct {
+	return v1.UsersCount{
+		Users: struct {
 			Active   int64 `json:"active"`
 			Inactive int64 `json:"inactive"`
-		} `json:"users"`
-	}(struct {
-		Users struct {
-			Active   int64 `json:"active"`
-			Inactive int64 `json:"inactive"`
-		}
-	}{Users: struct {
-		Active   int64 `json:"active"`
-		Inactive int64 `json:"inactive"`
-	}(struct {
-		Active   int64
-		Inactive int64
-	}{Active: active, Inactive: inactive})})}
+		}(struct {
+			Active   int64
+			Inactive int64
+		}{Active: active, Inactive: inactive})}
 }
 
 func (u userRepository) GetUsersByCompanyId(companyId string, status enums.STATUS) []v1.User {

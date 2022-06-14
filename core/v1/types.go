@@ -283,10 +283,8 @@ type GitWebhook struct {
 
 // UsersCount contains active and inactive users count data
 type UsersCount struct {
-	Data struct {
-		Users struct {
-			Active   int64 `json:"active"`
-			Inactive int64 `json:"inactive"`
-		} `json:"users"`
-	} `json:"data"`
+	Users struct {
+		Active   int64 `json:"active"`
+		Inactive int64 `json:"inactive"`
+	} `json:"users"`
 }
