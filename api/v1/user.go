@@ -365,13 +365,14 @@ func (u userApi) GetByID(context echo.Context) error {
 	if err != nil {
 		return common.GenerateErrorResponse(context, err.Error(), "Operation Failed!")
 	}
-	id := context.Param("id")
+	id := userResourcePermission.UserId
 	if userResourcePermission.UserId != id {
 		if err := checkAuthority(userResourcePermission, string(enums.USER), "", string(enums.READ)); err != nil {
 			return common.GenerateForbiddenResponse(context, err.Error(), "Operation Failed!")
 		}
 	}
 	data := u.userService.GetByID(id)
+	data.Password = ""
 	if data.ID == "" {
 		return common.GenerateErrorResponse(context, "[ERROR]: User Not Found!", "Please give a valid user id!")
 	}
