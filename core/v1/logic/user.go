@@ -87,8 +87,14 @@ func (u userService) SendOtp(email, phone, baseUrl string) error {
 	var user v1.User
 	if email != "" {
 		user = u.GetByEmail(email)
+		if user.ID == "" {
+			return errors.New("user not found")
+		}
 	} else if phone != "" {
 		user = u.GetByPhone(phone)
+		if user.ID == "" {
+			return errors.New("user not found")
+		}
 	}
 	otp := v1.Otp{
 		ID:    user.ID,
