@@ -13,3 +13,22 @@
                                                                                       
 ```
 
+
+## Responsibility
+
+- Manages users.
+- Generates token for user login.
+- Generates token for refresh token.
+
+| Versions | Descriptors  |
+|----------|-------------|
+| [v0.0.1-beta](https://github.com/klovercloud-ci-cd/security/releases/tag/v0.0.1-beta) | [k8s](k8s/v0.0.1-beta) |
+
+
+## Want to contribute
+
+- See [CONTRIBUTING.md](https://github.com/klovercloud-ci-cd/core-engine/blob/master/markdownfiles/CONTRIBUTING.md)
+- See [DEVELOPMENT.md](https://github.com/klovercloud-ci-cd/core-engine/blob/master/markdownfiles/DEVELOPMENT.md) to get start
+- See [architecture](https://github.com/klovercloud-ci-cd/architecture/blob/master/README.md)
+- Look at our
+  [our issues](https://github.com/klovercloud-ci-cd/security/issues)
