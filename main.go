@@ -21,10 +21,10 @@ func main() {
 		AllowOrigins: []string{"*"},
 		AllowMethods: []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete},
 	}))
-	initSuperAdmin()
-	go initResources()
+	initResources()
 	initPermissions()
 	initRoles()
+	go initSuperAdmin()
 	api.Routes(e)
 	e.Logger.Fatal(e.Start(":" + config.ServerPort))
 }
